@@ -35,7 +35,14 @@ spec:
           volumeMounts:
             - name: laravel-persistent-storage
               mountPath: /var/www/html/storage
-      volumes:
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - /bin/bash
+                  - -c
+                  - php artisan migrate --force
+       volumes:
         - name: laravel-persistent-storage
           persistentVolumeClaim:
             claimName: laravel-pvc
