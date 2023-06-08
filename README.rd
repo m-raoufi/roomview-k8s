@@ -1,72 +1,104 @@
-This repository for deploying MySQL, Laravel, Nginx, and other necessary components on Kubernetes:
+# Deploying MySQL, Laravel, Nginx, and other Components on Kubernetes
 
-# Laravel Application Deployment on Kubernetes
+This repository provides a guide and example files for deploying a Laravel application along with MySQL as the database and Nginx as the web server on a Kubernetes cluster.
 
-This repository provides a guide and example files for deploying a Laravel application on Kubernetes, including MySQL as the database and Nginx as the web server.
-
-**Prerequisites**
+## Prerequisites
 
 Before proceeding with the deployment, make sure you have the following prerequisites:
 
-- Kubernetes cluster up and running
+- Kubernetes cluster up and running with Docker driver
 - `kubectl` command-line tool configured to connect to your cluster
+
+## Create Laravel project 
+
+- Insttall php and composer on host
+```bash
+sudo apt update
+sudo apt install php:74-fpm php-xml composer
+```
+- Run this command to create 
+```bash
+composer create-project laravel/laravel rommview-app
+```
+
+## Build Docker Image Steps
+
+Follow the steps below to build the Mysql and Laravel and Nginx to create images :
+
+- Run Docker build command
+
+```bash
+docker build -t mysql-roomview:v1 -f roomview-app/DockerFile-FPM .
+docker build -t laravel-roomview:v1 -f DockerFile-DB .
+docker build -t nginx-roomview:v1 -f DockerFile-Web .
+```
 
 ## Deployment Steps
 
 Follow the steps below to deploy the Laravel application on Kubernetes:
 
-1. Clone this repository to your local machine:
+#### 1. Clone this repository to your local machine:
 
-```bash
-
-git clone https://github.com/m-raoufi/roomview-k8s.git
-cd roomview-k8s
-```
-Customize the configuration files:
+   ```bash
+   git clone https://github.com/m-raoufi/roomview-k8s.git
+   cd roomview-k8s
+   ```
+#### 2. Customize the configuration files:
 
 Adjust the MySQL and Laravel environment variables in the laravel-deployment.yaml file.
 Modify the Nginx configuration in the nginx-configmap.yaml file according to your requirements.
-Create the Kubernetes resources:
 
-**Apply the MySQL deployment and service:**
+#### 3.Create the Kubernetes resources:
 
-   'kubectl apply -f Secrets/secret-mysql.yaml'
-   'kubectl apply -f Deployments/mysql-deployment.yaml'
+- Apply the MySQL Deployment and Secret:
 
-**Apply the Laravel deployment:**
+```bash
+kubectl apply -f Secrets/secret-mysql.yaml
+kubectl apply -f Deployments/mysql-deployment.yaml
+```
 
-   'kubectl apply -f laravel-deployment.yaml'
+- Apply the Laravel Deployment and CluterIP Service:
 
-**Apply the Nginx deployment, ConfigMap, and NodePort service:**
+```bash
+kubectl apply -f Deployments/laravel-deployment.yaml
+kubectl apply -f Services/laravel-service.yaml
+```
+- Apply the Nginx Deployment, ConfigMap, and NodePort service:
 
-   [kubectl apply -f nginx-deployment.yaml]
-   'kubectl apply -f nginx-configmap.yaml
-   kubectl apply -f nginx-service.yaml'
+```bash
+kubectl apply -f ConfigMaps/nginx-configmap.yaml
+kubectl apply -f Deployments/nginx-deployment.yaml
+kubectl apply -f Services/nginx-service.yaml
+```
 
-**Monitor the deployment:**
+#### 4.Monitor the deployment:
 
-Check the status of the deployments:
+- Check the status of the deployments:
 
-   'kubectl get deployments'
+```bash
+kubectl get deployments
+```
+#### 5.Verify the status of the pods:
 
-**Verify the status of the pods:**
+```bash
+kubectl get pods
+```
 
-   'kubectl get pods'
+#### 6.Access the Laravel application:
 
-**Access the Laravel application:**
+- Get the NodePort assigned to the Nginx service:
 
-Get the NodePort assigned to the Nginx service:
+```bash
+kubectl get service nginx-service
+```
+- Open a web browser and visit http://<NODE_IP>:<NODE_PORT> (replace <NODE_IP> and <NODE_PORT> with the appropriate values).
 
-   'kubectl get service nginx-service'
-Open a web browser and visit http://<NODE_IP>:<NODE_PORT> (replace <NODE_IP> and <NODE_PORT> with the appropriate values).
-
-Troubleshooting
+## Troubleshooting
 If you encounter any issues during the deployment or when accessing the Laravel application, refer to the Troubleshooting guide for common problems and their solutions.
 
-Contributing
+## Contributing
 Contributions are welcome! If you find any bugs, have suggestions, or want to add new features, please open an issue or submit a pull request.
 
-License
-This project is licensed under the MIT License.
+#### License
+This project is licensed under the RMV License.
 
-You can include this README.md file in the root directory of your GitHub repository. Feel free to modify it further to suit your specific needs and add any additional information you want to provide to users.
