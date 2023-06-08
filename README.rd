@@ -18,6 +18,7 @@ Follow the steps below to deploy the Laravel application on Kubernetes:
 1. Clone this repository to your local machine:
 
 ```bash
+
 git clone https://github.com/m-raoufi/roomview-k8s.git
 cd roomview-k8s
 ```
