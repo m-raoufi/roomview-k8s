@@ -1,6 +1,6 @@
 This repository for deploying MySQL, Laravel, Nginx, and other necessary components on Kubernetes:
 
-**Laravel Application Deployment on Kubernetes**
+# Laravel Application Deployment on Kubernetes
 
 This repository provides a guide and example files for deploying a Laravel application on Kubernetes, including MySQL as the database and Nginx as the web server.
 
