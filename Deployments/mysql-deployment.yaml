@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: mysql
-          image: mysql:latest
+          image: mysql-roomview:v1
           env:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:

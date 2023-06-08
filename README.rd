@@ -9,7 +9,7 @@ Before proceeding with the deployment, make sure you have the following prerequi
 - Kubernetes cluster up and running with Docker driver
 - `kubectl` command-line tool configured to connect to your cluster
 
-## Create Laravel project 
+## Install PHP, Compose and Create Laravel project 
 
 - Insttall php and composer on host
 ```bash
@@ -28,8 +28,8 @@ Follow the steps below to build the Mysql and Laravel and Nginx to create images
 - Run Docker build command
 
 ```bash
-docker build -t mysql-roomview:v1 -f roomview-app/DockerFile-FPM .
-docker build -t laravel-roomview:v1 -f DockerFile-DB .
+docker build -t mysql-roomview:v1 -f roomview-app/DockerFile-DB .
+docker build -t laravel-roomview:v1 -f DockerFile-FPM .
 docker build -t nginx-roomview:v1 -f DockerFile-Web .
 ```
 

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: laravel
-          image: afra-repo.jiring.local:8083/laravel-rmv:latest
+          image: laravel-roomview:v1
           env:
             - name: DB_HOST
               value: mysql-service
