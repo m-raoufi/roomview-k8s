@@ -14,7 +14,7 @@ Before proceeding with the deployment, make sure you have the following prerequi
 - Insttall php and composer on host
 ```bash
 sudo apt update
-sudo apt install php:74-fpm php-xml composer
+sudo apt install php:7.4-fpm php-xml composer
 ```
 - Run this command to create 
 ```bash
